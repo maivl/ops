@@ -145,9 +145,20 @@ exports.del= function(req, res, next){
 }
 
 exports.close= function(req, res, next){
-	tools.rendJSON(req, res, {
-		code: 0,
-		message: "success",
-		data: null
+	var query = req.query,
+		path= query.path,
+		command = "cd "+ config.base + path + "/ && forever stop index.js";
+	exec(command, function(err, result){
+		var data= {
+			code: 0,
+			message: "success",
+			data: result
+		};
+		if(err){
+			data.code= 1000;
+			data.message= JSON.stringify(err);
+			data.data= result;
+		}
+		tools.rendJSON(req, res, data);
 	});
 }
