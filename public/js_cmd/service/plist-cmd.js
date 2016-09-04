@@ -28,9 +28,9 @@ define(function(require, exports, module){
 	                success: function(res){
 	                   l.destroy();
 	                   if(0== res.code){
-	                   		alert('<div style="color: green;">'+ res.data+'</div>');
+	                   		alert('<div style="color: green;white-space: pre-line;text-align: left;height: 200px;overflow: scroll;">'+ res.data+'</div>');
 	                   }else{
-	                   		alert('<div style="color: red;">'+ res.message+'</div>');
+	                   		alert('<div style="color: green;white-space: pre-line;text-align: left;height: 200px;overflow: scroll;">'+ res.message+'</div>');
 	                   }
 	                },
 	                dataType: "json"
