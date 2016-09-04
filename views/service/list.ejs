@@ -1,0 +1,56 @@
+<%- include ../header.ejs %>
+	<link href="/css/service/plist.css?v=<%= config.version %>" rel="stylesheet" />
+	<div data-role="container" class="body <%= pageName %>">
+		<header data-role="header">
+			<!---->
+		</header>
+		<section data-role="body" class="section-body">
+			<table id="serviceList">
+				<tbody>
+					<tr style="background:#efefef;">
+						<td colspan="2" style="width:100px;">Thu Sep 01 2016 10:24:18 GMT+0800 (CST)</td>
+						<td colspan="3"></td>
+					</tr>
+					<tr v-for="info in serviceList" :class="{'off': (0== info.start), 'on': (1== info.start)}" >
+						<td rowspan="{{tmp| typeCount info.env}}">
+							<label v-text="info.env"></label>
+						</td>
+						<td :style="{textAlign: 'left', color: (0== info.start? '#ccc': 'green') }">
+							<div>
+								<i v-text="info.port"></i>
+								<label v-text="info.path"></label>
+							</div>
+						</td>
+						<td>
+							<a href="javascript:;" v-on:click="serviceOp('up', info.path, $event)">更新</a>
+						</td>
+						<td>
+							<a href="javascript:;" v-on:click="serviceOp('restart', info.path, $event)">重启</a>
+						</td>
+						<td>
+							<a href="javascript:;" v-on:click="serviceOp('start', info.path, $event)">启动</a>
+						</td>
+						<td>
+							<a href="javascript:;" v-on:click="serviceOp('close', info.path, $event)">关闭</a>
+						</td>
+						<td v-if="1== info.start" class="state">^^</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		<footer data-role="footer">
+			<!---->
+		</footer>
+	</div>
+<script>
+	APP.serviceList= <%- JSON.stringify(serviceList) %>;
+	APP.urls= {
+		up: "/api/svn/up",
+		del: "/api/service/del",
+		restart: "/api/service/restart",
+		start: "/api/service/start",
+		close: "/api/service/close"
+	};
+	seajs.use("js_cmd/service/plist-cmd.js");
+</script>
+<%- include ../footer.ejs %>
